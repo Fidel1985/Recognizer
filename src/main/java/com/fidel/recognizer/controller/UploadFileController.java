@@ -1,5 +1,7 @@
 package com.fidel.recognizer.controller;
 
+import com.fidel.recognizer.service.ImageRecognitionService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -8,18 +10,22 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import javax.servlet.ServletConfig;
 import java.io.*;
 
 import java.net.BindException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.security.GeneralSecurityException;
 
 import com.fidel.recognizer.entity.UploadItem;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 @Controller
 @RequestMapping(value = "/uploadFile")
 public class UploadFileController {
+
+    //@Autowired
+    //ImageRecognitionService imageRecognitionService;
 
     private String uploadFolderPath;
 
@@ -47,7 +53,10 @@ public class UploadFileController {
 
             // Creating the directory to store file
             String rootPath = System.getProperty("catalina.home");
-            File dir = new File(rootPath + File.separator + "webapps" + File.separator + "ROOT" + File.separator + "resources");
+            String outputDir = rootPath + File.separator + "webapps" + File.separator + "ROOT" + File.separator + "resources";
+            Path inputDir = Paths.get("/resources/" + multipartFile.getOriginalFilename());
+            //String inputDir = "/resources/" + multipartFile.getOriginalFilename();
+            File dir = new File(outputDir);
             if (!dir.exists())
                 dir.mkdirs(); //???
 
@@ -68,9 +77,10 @@ public class UploadFileController {
 
                 //session.setAttribute("uploadFile", dir.getAbsolutePath() + File.separator + multipartFile.getOriginalFilename());
                 session.setAttribute("uploadFile", "/resources/" + multipartFile.getOriginalFilename());
-
+                //imageRecognitionService.recognize(multipartFile, outputDir, inputDir);
             }
         } catch (IOException e) {
+        //} catch (IOException|GeneralSecurityException e) {
             e.printStackTrace();
         }
         return "redirect:/uploadFileIndex";
