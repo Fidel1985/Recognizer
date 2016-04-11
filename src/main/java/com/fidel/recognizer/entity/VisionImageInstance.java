@@ -14,14 +14,14 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
 
-public class VisionInstance {
+public class VisionImageInstance {
 
     private final Vision vision;
 
     /**
-     * Constructs a {@link VisionInstance} which connects to the Vision API.
+     * Constructs a {@link VisionImageInstance} which connects to the Vision API.
      */
-    public VisionInstance (Vision vision) {
+    public VisionImageInstance(Vision vision) {
         this.vision = vision;
     }
 

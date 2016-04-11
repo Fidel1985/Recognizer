@@ -1,6 +1,6 @@
 package com.fidel.recognizer.service;
 
-import com.fidel.recognizer.entity.VisionInstance;
+import com.fidel.recognizer.entity.VisionImageInstance;
 import com.google.api.client.googleapis.auth.oauth2.GoogleCredential;
 import com.google.api.client.googleapis.javanet.GoogleNetHttpTransport;
 import com.google.api.client.json.JsonFactory;
@@ -21,24 +21,24 @@ public class ImageRecognitionService {
      * Be sure to specify the name of your application. If the application name is {@code null} or
      * blank, the application will log a warning. Suggested format is "MyCompany-ProductName/1.0".
      */
-    private static final String APPLICATION_NAME = "visionproject-1277";
+    private static final String APPLICATION_NAME = "VisionImage/1.0";
 
     //private static final int MAX_RESULTS = 4;
     private static final int MAX_RESULTS = 20;
 
 
-    public void recognize(Path outputPath, Path inputPath)
+    public void recognizeFaces(Path outputPath, Path inputPath)
             throws IOException, GeneralSecurityException {
 
-        VisionInstance app = new VisionInstance(getVisionService());
-        List<FaceAnnotation> faces = app.detectFaces(inputPath, MAX_RESULTS);
+        VisionImageInstance visionImageInstance = new VisionImageInstance(getVisionService());
+        List<FaceAnnotation> faces = visionImageInstance.detectFaces(inputPath, MAX_RESULTS);
         System.out.printf("Found %d face%s\n", faces.size(), faces.size() == 1 ? "" : "s");
         System.out.printf("Writing to file %s\n", outputPath);
-        app.writeWithFaces(inputPath, outputPath, faces);
+        visionImageInstance.writeWithFaces(inputPath, outputPath, faces);
 
     }
 
-    public static Vision getVisionService() throws IOException, GeneralSecurityException {
+    public Vision getVisionService() throws IOException, GeneralSecurityException {
         GoogleCredential credential =
                 GoogleCredential.getApplicationDefault().createScoped(VisionScopes.all());
         JsonFactory jsonFactory = JacksonFactory.getDefaultInstance();

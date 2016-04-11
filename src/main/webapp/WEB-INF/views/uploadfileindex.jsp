@@ -22,5 +22,36 @@
   }
 %>
 <h2><a href="recognizeFaces">Recognize Faces</a></h2>
+<h2><a href="recognizeLabels">Recognize Labels</a></h2>
+<%
+  if (session.getAttribute("label0") != null) {
+%>
+<div>
+  <%=session.getAttribute("label0")%>
+</div>
+<%
+    session.removeAttribute("label0");
+  }
+%>
+<%
+  if (session.getAttribute("label1") != null) {
+%>
+<div>
+  <%=session.getAttribute("label1")%>
+</div>
+<%
+    session.removeAttribute("label1");
+  }
+%>
+<%
+  if (session.getAttribute("label2") != null) {
+%>
+<div>
+  <%=session.getAttribute("label2")%>
+</div>
+<%
+    session.removeAttribute("label2");
+  }
+%>
 </body>
 </html>
