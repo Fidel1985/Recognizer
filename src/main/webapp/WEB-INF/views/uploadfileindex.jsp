@@ -8,18 +8,19 @@
   <title>Welcome</title>
 </head>
 <body>
-<h2><a href="uploadFile">Upload Example</a></h2>
+<h2><a href="uploadFile">Upload Another Image</a></h2>
 <%
   if (session.getAttribute("uploadFile") != null
     && !(session.getAttribute("uploadFile")).equals("")) {
 %>
-<h3>Uploaded File</h3>
+<%--<h3>Uploaded File</h3>--%>
 <br>
 <img src="<%=session.getAttribute("uploadFile")%>" alt="Upload Image" />
 
 <%
-    session.removeAttribute("uploadFile");
+    /*session.removeAttribute("uploadFile");*/
   }
 %>
+<h2><a href="recognizeFaces">Recognize Faces</a></h2>
 </body>
 </html>
