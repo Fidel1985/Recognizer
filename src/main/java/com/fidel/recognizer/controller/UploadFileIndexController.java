@@ -11,7 +11,7 @@ public class UploadFileIndexController {
 
     // Display the form on the get request
     @RequestMapping(method = RequestMethod.GET)
-    public String showRegistration(Model model) {
+    public String showUploadedFile(Model model) {
         return "uploadFileIndex";
     }
 

@@ -1,28 +1,53 @@
-package com.fidel.recognizer.entity;
+package com.fidel.recognizer.service;
 
+import com.google.api.client.googleapis.auth.oauth2.GoogleCredential;
+import com.google.api.client.googleapis.javanet.GoogleNetHttpTransport;
+import com.google.api.client.json.JsonFactory;
+import com.google.api.client.json.jackson2.JacksonFactory;
 import com.google.api.services.vision.v1.Vision;
+import com.google.api.services.vision.v1.VisionScopes;
 import com.google.api.services.vision.v1.model.*;
 import com.google.common.collect.ImmutableList;
+import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.security.GeneralSecurityException;
 import java.util.List;
 
-public class VisionLabelInstance {
+@Service
+public class LabelRecognitionServiceImpl implements LabelRecognitionService{
+    /**
+     * Be sure to specify the name of your application. If the application name is {@code null} or
+     * blank, the application will log a warning. Suggested format is "MyCompany-ProductName/1.0".
+     */
+    private static final String APPLICATION_NAME = "VisionLabel/1.0";
     private final Vision vision;
 
     /**
-     * Constructs a {@link VisionLabelInstance} which connects to the Vision API.
+     * Constructs a {@link LabelRecognitionServiceImpl} which connects to the Vision API.
      */
-    public VisionLabelInstance(Vision vision) {
-        this.vision = vision;
+    private LabelRecognitionServiceImpl() throws IOException, GeneralSecurityException {
+        // [START authenticate]
+        /**
+         * Connects to the Vision API using Application Default Credentials.
+         */
+        GoogleCredential credential =
+                GoogleCredential.getApplicationDefault().createScoped(VisionScopes.all());
+        JsonFactory jsonFactory = JacksonFactory.getDefaultInstance();
+        vision = new Vision.Builder(GoogleNetHttpTransport.newTrustedTransport(), jsonFactory, credential)
+                .setApplicationName(APPLICATION_NAME)
+                .build();
+
+        // [END authenticate]
     }
 
     /**
      * Gets up to {@code maxResults} labels for an image stored at {@code path}.
      */
     public List<EntityAnnotation> labelImage(Path path, int maxResults) throws IOException {
+
         // [START construct_request]
         byte[] data = Files.readAllBytes(path);
 

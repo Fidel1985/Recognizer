@@ -1,9 +1,9 @@
 package com.fidel.recognizer.controller;
 
-import com.fidel.recognizer.entity.UploadItem;
 import com.fidel.recognizer.service.ImageRecognitionService;
 import com.fidel.recognizer.service.LabelRecognitionService;
 import com.google.api.services.vision.v1.model.EntityAnnotation;
+import com.google.api.services.vision.v1.model.FaceAnnotation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,12 +18,10 @@ import java.io.IOException;
 import java.net.BindException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.security.GeneralSecurityException;
-import java.util.ArrayList;
 import java.util.List;
 
+@RequestMapping(value = "/recognize")
 @Controller
-//@RequestMapping(value = "/recognizeFaces")
 public class RecognizeFileController {
 
     @Autowired
@@ -32,50 +30,42 @@ public class RecognizeFileController {
     @Autowired
     LabelRecognitionService labelRecognitionService;
 
-    @RequestMapping(value = "/recognizeFaces", method = RequestMethod.GET)
-    public String recognizeFaces(UploadItem uploadItem, HttpServletRequest request,
-                                 HttpServletResponse response, Object command, BindException errors,
-                                 HttpSession session) {
+    @RequestMapping(params = "recognizeFaces", method = RequestMethod.GET)
+    public String recognizeFaces(HttpServletRequest request, HttpServletResponse response, Object command,
+                                 BindException errors, HttpSession session) {
 
         String imagePath = (String) session.getAttribute("uploadFile");
         String rootPath = System.getProperty("catalina.home");
         Path path = Paths.get(rootPath + File.separator + "webapps" + File.separator + "ROOT" + File.separator + imagePath);
 
         try{
-            imageRecognitionService.recognizeFaces(path, path);
-        }catch(IOException | GeneralSecurityException e){
+            List<FaceAnnotation> faces = imageRecognitionService.detectFaces(path, ImageRecognitionService.MAX_RESULTS);
+            imageRecognitionService.writeWithFaces(path, path, faces);
+        }
+        catch(IOException e) {
             e.printStackTrace();
         }
 
         return "redirect:/uploadFileIndex";
     }
 
-    @RequestMapping(value = "/recognizeLabels", method = RequestMethod.GET)
-    public String recognizeLabels(UploadItem uploadItem, HttpServletRequest request,
-                                 HttpServletResponse response, Object command, BindException errors,
-                                 HttpSession session, Model model) {
+    @RequestMapping(params = "recognizeLabels", method = RequestMethod.GET)
+    public String recognizeLabels(HttpServletRequest request, HttpServletResponse response, Object command,
+                                  BindException errors, HttpSession session, Model model) {
 
         String imagePath = (String) session.getAttribute("uploadFile");
         String rootPath = System.getProperty("catalina.home");
         Path path = Paths.get(rootPath + File.separator + "webapps" + File.separator + "ROOT" + File.separator + imagePath);
 
-        int i = 0;
-
-        try{
-            List<EntityAnnotation> labels = labelRecognitionService.recognizeLabels(path);
-            for (EntityAnnotation label : labels) {
-                if(label != null) {
-                    session.setAttribute("label"+i, label.getDescription() + ", " + label.getScore());
-                    i++;
-                }
-            }
-
-        }catch(IOException | GeneralSecurityException e){
+        try {
+            List<EntityAnnotation> labels = labelRecognitionService.labelImage(path, labelRecognitionService.MAX_LABELS);
+            session.setAttribute("labels", labels);
+        }
+        catch(IOException e) {
             e.printStackTrace();
         }
 
         return "redirect:/uploadFileIndex";
     }
-
 
 }

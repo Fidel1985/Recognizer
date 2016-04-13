@@ -14,10 +14,12 @@
                                 type="annotation"/>
     </context:component-scan>
 
-    <bean id="imageRecognitionManager" class="com.fidel.recognizer.service.ImageRecognitionService">
-    </bean>
-    <bean id="labelRecognitionManager" class="com.fidel.recognizer.service.LabelRecognitionService">
-    </bean>
+<!--    <bean id="uploadFileManager" class="com.fidel.recognizer.service.UploadFileServiceImpl">
+    </bean>-->
+<!--    <bean id="imageRecognitionManager" class="com.fidel.recognizer.service.ImageRecognitionService">
+    </bean>-->
+<!--    <bean id="labelRecognitionManager" class="com.fidel.recognizer.service.LabelRecognitionService">
+    </bean>-->
 
 <!--    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
         <property name="prefix" value="/WEB-INF/pages/"/>

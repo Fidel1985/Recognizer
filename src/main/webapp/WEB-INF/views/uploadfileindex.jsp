@@ -2,6 +2,7 @@
 <%@page pageEncoding="UTF-8"%>
 <%@ page session="true"%>
 <%@taglib prefix="core" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <html>
 <head>
   <META http-equiv="Content-Type" content="text/html;charset=UTF-8">
@@ -13,7 +14,6 @@
   if (session.getAttribute("uploadFile") != null
     && !(session.getAttribute("uploadFile")).equals("")) {
 %>
-<%--<h3>Uploaded File</h3>--%>
 <br>
 <img src="<%=session.getAttribute("uploadFile")%>" alt="Upload Image" />
 
@@ -21,36 +21,24 @@
     /*session.removeAttribute("uploadFile");*/
   }
 %>
-<h2><a href="recognizeFaces">Recognize Faces</a></h2>
-<h2><a href="recognizeLabels">Recognize Labels</a></h2>
+<form:form modelAttribute="uploadItem" action="/recognize"
+           name="recognize" method="get">
+<table>
+  <tr>
+    <td><input name="recognizeFaces" type="submit" value="Recognize Faces" /></td>
+    <td><input name="recognizeLabels" type="submit" value="Recognize Labels" /></td>
+  </tr>
+</table>
+</form:form>
 <%
-  if (session.getAttribute("label0") != null) {
+  if (session.getAttribute("labels") != null) {
 %>
-<div>
-  <%=session.getAttribute("label0")%>
-</div>
-<%
-    session.removeAttribute("label0");
-  }
-%>
-<%
-  if (session.getAttribute("label1") != null) {
-%>
-<div>
-  <%=session.getAttribute("label1")%>
-</div>
-<%
-    session.removeAttribute("label1");
-  }
-%>
-<%
-  if (session.getAttribute("label2") != null) {
-%>
-<div>
-  <%=session.getAttribute("label2")%>
-</div>
-<%
-    session.removeAttribute("label2");
+<core:forEach var="label" items="${labels}">
+<h3><core:out value="${label.getDescription()}"/>
+<core:out value="${label.getScore()}"/></h3><p>
+  </core:forEach>
+      <%
+    session.removeAttribute("labels");
   }
 %>
 </body>
