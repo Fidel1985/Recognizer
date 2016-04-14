@@ -6,10 +6,10 @@
 <html>
 <head>
   <META http-equiv="Content-Type" content="text/html;charset=UTF-8">
-  <title>Welcome</title>
+  <title>Uploaded Image</title>
 </head>
 <body>
-<h2><a href="uploadFile">Upload Another Image</a></h2>
+<h3><a href="uploadFile">Upload Another Image</a></h3>
 <%
   if (session.getAttribute("uploadFile") != null
     && !(session.getAttribute("uploadFile")).equals("")) {

@@ -33,7 +33,7 @@
   <fieldset><legend>Upload File</legend>
     <table>
       <tr>
-        <td><form:label for="fileData" path="fileData">File</form:label><br />
+        <td><form:label for="fileName" path="fileName">File</form:label><br />
         </td>
         <td><form:input path="fileData" id="image" type="file" /></td>
       </tr>
