@@ -12,6 +12,7 @@
     <properties>
         <jdk.compiler.version>1.8</jdk.compiler.version>
         <org.springframework.version>4.1.6.RELEASE</org.springframework.version>
+        <org.spring.security.version>4.0.2.RELEASE</org.spring.security.version>
         <org.slf4j.version>1.7.13</org.slf4j.version>
         <javax.servlet.jstl.version>1.2</javax.servlet.jstl.version>
         <javax.servlet.jsp.jstl.version>1.2</javax.servlet.jsp.jstl.version>
@@ -19,6 +20,7 @@
     </properties>
 
     <dependencies>
+        <!-- Spring Framework -->
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-webmvc</artifactId>
@@ -29,11 +31,17 @@
             <artifactId>spring-web</artifactId>
             <version>${org.springframework.version}</version>
         </dependency>
-<!--        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-orm</artifactId>
-            <version>${org.springframework.version}</version>
-        </dependency>-->
+        <!-- Spring Security -->
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-web</artifactId>
+            <version>${org.spring.security.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-config</artifactId>
+            <version>${org.spring.security.version}</version>
+        </dependency>
 
         <dependency>
             <groupId>javax.servlet</groupId>
@@ -45,7 +53,6 @@
             <artifactId>jstl-api</artifactId>
             <version>${javax.servlet.jsp.jstl.version}</version>
         </dependency>
-
         <!-- Apache Commons FileUpload -->
         <dependency>
             <groupId>commons-fileupload</groupId>
@@ -58,7 +65,7 @@
             <artifactId>commons-io</artifactId>
             <version>2.4</version>
         </dependency>
-
+        <!-- Google Recognition API -->
         <dependency>
             <groupId>com.google.apis</groupId>
             <artifactId>google-api-services-vision</artifactId>

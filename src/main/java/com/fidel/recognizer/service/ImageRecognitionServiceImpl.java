@@ -1,6 +1,5 @@
 package com.fidel.recognizer.service;
 
-
 import com.google.api.client.googleapis.auth.oauth2.GoogleCredential;
 import com.google.api.client.googleapis.javanet.GoogleNetHttpTransport;
 import com.google.api.client.json.JsonFactory;
@@ -34,17 +33,20 @@ public class ImageRecognitionServiceImpl implements ImageRecognitionService {
      * Constructs a {@link ImageRecognitionServiceImpl} which connects to the Vision API.
      */
     private ImageRecognitionServiceImpl() throws IOException, GeneralSecurityException {
-
+        // [START authenticate]
+        /**
+         * Connects to the Vision API using Application Default Credentials.
+         */
         GoogleCredential credential =
                 GoogleCredential.getApplicationDefault().createScoped(VisionScopes.all());
         JsonFactory jsonFactory = JacksonFactory.getDefaultInstance();
         vision = new Vision.Builder(GoogleNetHttpTransport.newTrustedTransport(), jsonFactory, credential)
                 .setApplicationName(APPLICATION_NAME)
                 .build();
+        // [END authenticate]
     }
 
     // [START detect_face]
-
     /**
      * Gets up to {@code maxResults} faces for an image stored at {@code path}.
      */

@@ -39,7 +39,6 @@ public class LabelRecognitionServiceImpl implements LabelRecognitionService{
         vision = new Vision.Builder(GoogleNetHttpTransport.newTrustedTransport(), jsonFactory, credential)
                 .setApplicationName(APPLICATION_NAME)
                 .build();
-
         // [END authenticate]
     }
 

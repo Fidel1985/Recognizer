@@ -3,22 +3,22 @@
 <%@ page session="true"%>
 <%@taglib prefix="core" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+
 <html>
 <head>
   <META http-equiv="Content-Type" content="text/html;charset=UTF-8">
   <title>Uploaded Image</title>
 </head>
 <body>
-<h3><a href="uploadFile">Upload Another Image</a></h3>
+<h4><a href="<core:url value="/logout"/>">Logout</a></h4>
+<h4><a href="uploadFile">Upload Another Image</a></h4>
 <%
   if (session.getAttribute("uploadFile") != null
     && !(session.getAttribute("uploadFile")).equals("")) {
 %>
 <br>
-<img src="<%=session.getAttribute("uploadFile")%>" alt="Upload Image" />
-
+<img src="<%=session.getAttribute("uploadFile")%>" alt="Uploaded Image" />
 <%
-    /*session.removeAttribute("uploadFile");*/
   }
 %>
 <form:form modelAttribute="uploadItem" action="/recognize"

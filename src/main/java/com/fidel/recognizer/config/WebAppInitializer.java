@@ -7,8 +7,7 @@ public class WebAppInitializer extends
 
     @Override
     protected Class<?>[] getRootConfigClasses() {
-        return new Class[] { SpringRootConfig.class };
-        //return new Class[] { SpringRootConfig.class, SecurityConfiguration.class };
+        return new Class[] { SpringRootConfig.class, SecurityConfig.class };
     }
 
     @Override

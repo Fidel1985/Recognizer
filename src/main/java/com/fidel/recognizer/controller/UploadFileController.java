@@ -30,14 +30,9 @@ public class UploadFileController {
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public String uploadFileHandler(UploadItem uploadItem, HttpServletRequest request,
-                                    HttpServletResponse response, Object command, BindException errors,
-                                    HttpSession session) {
-
+    public String uploadFileHandler(UploadItem uploadItem, HttpSession session) {
         try {
-            String path = uploadFileService.uploadFile(uploadItem);
-            session.setAttribute("uploadFile", path);
-
+            session.setAttribute("uploadFile", uploadFileService.uploadFile(uploadItem));
         } catch(IOException e) {
             e.printStackTrace();
         }

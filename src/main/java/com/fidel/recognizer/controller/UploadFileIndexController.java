@@ -9,9 +9,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @RequestMapping("/uploadFileIndex")
 public class UploadFileIndexController {
 
-    // Display the form on the get request
     @RequestMapping(method = RequestMethod.GET)
-    public String showUploadedFile(Model model) {
+    public String showUploadedFile() {
         return "uploadFileIndex";
     }
 

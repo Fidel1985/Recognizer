@@ -21,7 +21,7 @@ public class UploadFileServiceImpl implements UploadFileService {
 
         File dir = new File(outputDir);
         if (!dir.exists())
-            dir.mkdirs(); //???
+            dir.mkdirs();
 
         InputStream inputStream = null;
         OutputStream outputStream = null;

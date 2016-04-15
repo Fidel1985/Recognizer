@@ -31,8 +31,7 @@ public class RecognizeFileController {
     LabelRecognitionService labelRecognitionService;
 
     @RequestMapping(params = "recognizeFaces", method = RequestMethod.GET)
-    public String recognizeFaces(HttpServletRequest request, HttpServletResponse response, Object command,
-                                 BindException errors, HttpSession session) {
+    public String recognizeFaces(HttpSession session) {
 
         String imagePath = (String) session.getAttribute("uploadFile");
         String rootPath = System.getProperty("catalina.home");
@@ -50,8 +49,7 @@ public class RecognizeFileController {
     }
 
     @RequestMapping(params = "recognizeLabels", method = RequestMethod.GET)
-    public String recognizeLabels(HttpServletRequest request, HttpServletResponse response, Object command,
-                                  BindException errors, HttpSession session, Model model) {
+    public String recognizeLabels(HttpSession session) {
 
         String imagePath = (String) session.getAttribute("uploadFile");
         String rootPath = System.getProperty("catalina.home");
